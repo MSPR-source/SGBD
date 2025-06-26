@@ -1,3 +1,27 @@
+CREATE TABLE Instance (
+   NumSerie VARCHAR(50) PRIMARY KEY,
+   Nom VARCHAR(100),
+   IP_LAN VARCHAR(15),
+   IP_VPN VARCHAR(15),
+   Etat ENUM('connectée', 'déconnectée', 'indéfini'),
+   DateDesactivation DATETIME,
+   Version_OS VARCHAR(50),
+   Version_Harvester VARCHAR(50),
+   MaterielNFLIT BOOLEAN,
+   ARecuperer BOOLEAN,
+   IdFranchise INT,
+   IdScript INT NOT NULL,
+   IdIncident INT NOT NULL,
+   IdClientFinal INT,
+   IdRedemarrage INT NOT NULL,
+   NumLicence CHAR(8) NOT NULL UNIQUE,
+   FOREIGN KEY (IdFranchise) REFERENCES FRANCHISE_NFL(IdFranchise),
+   FOREIGN KEY (IdScript) REFERENCES SCRIPT(IdScript),
+   FOREIGN KEY (IdIncident) REFERENCES INCIDENT(IdIncident),
+   FOREIGN KEY (IdClientFinal) REFERENCES CLIENT_FINAL(IdClientFinal),
+   FOREIGN KEY (IdRedemarrage) REFERENCES REDEMARRAGE(IdRedemarrage),
+   FOREIGN KEY (NumLicence) REFERENCES LICENCE(NumLicence)
+);
 
 CREATE TABLE TECHNICIEN(
    IdTechnicien INT PRIMARY KEY,
@@ -54,31 +78,6 @@ CREATE TABLE INCIDENT(
    FOREIGN KEY(IdTechnicien) REFERENCES TECHNICIEN(IdTechnicien)
 );
 
-CREATE TABLE Instance (
-   NumSerie VARCHAR(50) PRIMARY KEY,
-   Nom VARCHAR(100),
-   IP_LAN VARCHAR(15),
-   IP_VPN VARCHAR(15),
-   Etat ENUM('connectée', 'déconnectée', 'indéfini'),
-   DateDesactivation DATETIME,
-   Version_OS VARCHAR(50),
-   Version_Harvester VARCHAR(50),
-   MaterielNFLIT BOOLEAN,
-   ARecuperer BOOLEAN,
-   IdFranchise INT,
-   IdScript INT NOT NULL,
-   IdIncident INT NOT NULL,
-   IdClientFinal INT,
-   IdRedemarrage INT NOT NULL,
-   NumLicence CHAR(8) NOT NULL UNIQUE,
-   FOREIGN KEY (IdFranchise) REFERENCES FRANCHISE_NFL(IdFranchise),
-   FOREIGN KEY (IdScript) REFERENCES SCRIPT(IdScript),
-   FOREIGN KEY (IdIncident) REFERENCES INCIDENT(IdIncident),
-   FOREIGN KEY (IdClientFinal) REFERENCES CLIENT_FINAL(IdClientFinal),
-   FOREIGN KEY (IdRedemarrage) REFERENCES REDEMARRAGE(IdRedemarrage),
-   FOREIGN KEY (NumLicence) REFERENCES LICENCE(NumLicence)
-);
-
 CREATE TABLE MATERIEL(
    IdMateriel INT PRIMARY KEY,
    TypeMateriel VARCHAR(30),
@@ -87,7 +86,7 @@ CREATE TABLE MATERIEL(
    TypeDisque VARCHAR(30),
    TailleDisque VARCHAR(20),
    EstRecupere BOOLEAN,
-   NumSerie VARCHAR(50) NOT NULL,
+  
    NumSerie VARCHAR(50) NOT NULL UNIQUE,
    FOREIGN KEY (NumSerie) REFERENCES INSTANCE(NumSerie)
 );
