@@ -1,28 +1,3 @@
-CREATE TABLE Instance (
-   NumSerie VARCHAR(50) PRIMARY KEY,
-   Nom VARCHAR(100),
-   IP_LAN VARCHAR(15),
-   IP_VPN VARCHAR(15),
-   Etat ENUM('connectée', 'déconnectée', 'indéfini'),
-   DateDesactivation DATETIME,
-   Version_OS VARCHAR(50),
-   Version_Harvester VARCHAR(50),
-   MaterielNFLIT BOOLEAN,
-   ARecuperer BOOLEAN,
-   IdFranchise INT,
-   IdScript INT NOT NULL,
-   IdIncident INT NOT NULL,
-   IdClientFinal INT,
-   IdRedemarrage INT NOT NULL,
-   NumLicence CHAR(8) NOT NULL UNIQUE,
-   FOREIGN KEY (IdFranchise) REFERENCES FRANCHISE_NFL(IdFranchise),
-   FOREIGN KEY (IdScript) REFERENCES SCRIPT(IdScript),
-   FOREIGN KEY (IdIncident) REFERENCES INCIDENT(IdIncident),
-   FOREIGN KEY (IdClientFinal) REFERENCES CLIENT_FINAL(IdClientFinal),
-   FOREIGN KEY (IdRedemarrage) REFERENCES REDEMARRAGE(IdRedemarrage),
-   FOREIGN KEY (NumLicence) REFERENCES LICENCE(NumLicence)
-);
-
 CREATE TABLE TECHNICIEN(
    IdTechnicien INT PRIMARY KEY,
    Nom VARCHAR(50),
@@ -50,14 +25,6 @@ CREATE TABLE CLIENT_PRESTATAIRE(
    ContactPrincipal VARCHAR(100)
 );
 
-CREATE TABLE CLIENT_FINAL(
-   IdClientFinal INT PRIMARY KEY,
-   NomClient VARCHAR(100),
-   AdresseSite VARCHAR(80),
-   IdPrestataire INT NOT NULL,
-   FOREIGN KEY(IdPrestataire) REFERENCES CLIENT_PRESTATAIRE(IdPrestataire)
-);
-
 CREATE TABLE FRANCHISE_NFL(
    IdFranchise INT PRIMARY KEY,
    NomFranchise VARCHAR(100),
@@ -70,12 +37,45 @@ CREATE TABLE SCRIPT(
    VersionScript VARCHAR(20)
 );
 
+CREATE TABLE CLIENT_FINAL(
+   IdClientFinal INT PRIMARY KEY,
+   NomClient VARCHAR(100),
+   AdresseSite VARCHAR(80),
+   IdPrestataire INT NOT NULL,
+   FOREIGN KEY(IdPrestataire) REFERENCES CLIENT_PRESTATAIRE(IdPrestataire)
+);
+
 CREATE TABLE INCIDENT(
    IdIncident INT AUTO_INCREMENT PRIMARY KEY,
    DateHeure DATETIME,
    Description VARCHAR(250),
    IdTechnicien INT NOT NULL,
    FOREIGN KEY(IdTechnicien) REFERENCES TECHNICIEN(IdTechnicien)
+);
+
+CREATE TABLE Instance (
+   NumSerie VARCHAR(50) PRIMARY KEY,
+   Nom VARCHAR(100),
+   IP_LAN VARCHAR(15),
+   IP_VPN VARCHAR(15),
+   Etat ENUM('connectée', 'déconnectée', 'indéfini'),
+   DateDesactivation DATETIME,
+   Version_OS VARCHAR(50),
+   Version_Harvester VARCHAR(50),
+   MaterielNFLIT BOOLEAN,
+   ARecuperer BOOLEAN,
+   IdFranchise INT,
+   IdScript INT NOT NULL,
+   IdIncident INT NOT NULL,
+   IdClientFinal INT,
+   IdRedemarrage INT NOT NULL,
+   NumLicence CHAR(8) NOT NULL UNIQUE,
+   FOREIGN KEY (IdFranchise) REFERENCES FRANCHISE_NFL(IdFranchise),
+   FOREIGN KEY (IdScript) REFERENCES SCRIPT(IdScript),
+   FOREIGN KEY (IdIncident) REFERENCES INCIDENT(IdIncident),
+   FOREIGN KEY (IdClientFinal) REFERENCES CLIENT_FINAL(IdClientFinal),
+   FOREIGN KEY (IdRedemarrage) REFERENCES REDEMARRAGE(IdRedemarrage),
+   FOREIGN KEY (NumLicence) REFERENCES LICENCE(NumLicence)
 );
 
 CREATE TABLE MATERIEL(
