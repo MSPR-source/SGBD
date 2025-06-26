@@ -53,7 +53,7 @@ CREATE TABLE INCIDENT(
    FOREIGN KEY(IdTechnicien) REFERENCES TECHNICIEN(IdTechnicien)
 );
 
-CREATE TABLE Instance (
+CREATE TABLE INSTANCE (
    NumSerie VARCHAR(50) PRIMARY KEY,
    Nom VARCHAR(100),
    IP_LAN VARCHAR(15),
@@ -96,7 +96,7 @@ CREATE TABLE Deploiement(
    IdTechnicien INT,
    DateDeploiement DATETIME,
    PRIMARY KEY(NumSerie, IdTechnicien),
-   FOREIGN KEY(NumSerie) REFERENCES Instance(NumSerie),
+   FOREIGN KEY(NumSerie) REFERENCES INSTANCE(NumSerie),
    FOREIGN KEY(IdTechnicien) REFERENCES TECHNICIEN(IdTechnicien)
 );
 
